@@ -1,0 +1,46 @@
+.main {
+  padding: 30px 20px 0;
+  width: 60%;
+  max-width: 935px;
+  margin: 0 auto;
+}
+.name {
+  font-weight: normal;
+  font-size: 2em;
+}
+.postsInfo {
+  margin-top: 0.5em;
+  font-size: 1.25em;
+}
+.bio {
+  margin: 0.5em 0;
+  font-size: 1.25em;
+}
+.profile {
+  display: flex;
+}
+.photo {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 100px;
+  cursor: pointer;
+}
+.details {
+  margin-left: 4em;
+  display: flex;
+  flex-direction: column;
+}
+.photos {
+  margin-left: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.uploadPhoto {
+  background: #0575e6;
+  cursor: pointer;
+  color: white;
+  border: transparent;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+}

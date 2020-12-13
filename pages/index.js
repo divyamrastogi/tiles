@@ -1,61 +1,37 @@
-import Head from 'next/head'
-import { connectToDatabase } from '../util/mongodb'
+import Head from "next/head";
+import Link from "next/link";
+import { useEffect } from "react";
+import { connectToDatabase } from "../util/mongodb";
 
-export default function Home({ isConnected }) {
+export default function Home({ isConnected, users }) {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Tiles App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
-        </h1>
+        <h1 className="title">Welcome to Tiles</h1>
 
         {isConnected ? (
-          <h2 className="subtitle">You are connected to MongoDB</h2>
+          <h2 className="subtitle">
+            Please select the users to view their Tiles
+          </h2>
         ) : (
           <h2 className="subtitle">
-            You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
-            for instructions.
+            Unable to connect to server. Please check with the site
+            administrator.
           </h2>
         )}
 
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <ol>
+          {users.map((user) => (
+            <li key={user._id}>
+              <Link href={`/user/${user._id}`}>{user.name}</Link>
+            </li>
+          ))}
+        </ol>
       </main>
 
       <footer>
@@ -64,7 +40,7 @@ export default function Home({ isConnected }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
@@ -219,15 +195,16 @@ export default function Home({ isConnected }) {
         }
       `}</style>
     </div>
-  )
+  );
 }
 
 export async function getServerSideProps(context) {
-  const { client } = await connectToDatabase()
+  const { client, db } = await connectToDatabase();
 
-  const isConnected = await client.isConnected() // Returns true or false
-
+  const isConnected = await client.isConnected(); // Returns true or false
+  const res = await fetch("http://localhost:3000/api/users");
+  const users = await res.json();
   return {
-    props: { isConnected },
-  }
+    props: { isConnected, users },
+  };
 }
