@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect } from "react";
+import { server } from "config";
 import { connectToDatabase } from "../util/mongodb";
 
 export default function Home({ isConnected, users }) {
@@ -202,7 +202,7 @@ export async function getServerSideProps(context) {
   const { client, db } = await connectToDatabase();
 
   const isConnected = await client.isConnected(); // Returns true or false
-  const res = await fetch("http://localhost:3000/api/users");
+  const res = await fetch(`${server}/api/users`);
   const users = await res.json();
   return {
     props: { isConnected, users },
