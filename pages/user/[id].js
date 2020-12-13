@@ -107,6 +107,7 @@ export default function User({
 
 export async function getServerSideProps({ params }) {
   const { id } = params;
+  console.log("URL for deployment is: ", process.env.VERCEL_URL);
   const userResponse = await fetch(`${server}/api/user/${id}`);
   const user = await userResponse.json();
   const userPostsResponse = await fetch(`${server}/api/user/posts/${id}`);
