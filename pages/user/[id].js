@@ -14,6 +14,7 @@ export default function User({
   const myWidgetRef = useRef(null);
 
   useEffect(() => {
+    console.log("URL for deployment is: ", process.env.NEXT_PUBLIC_VERCEL_URL);
     const script = document.createElement("script");
     script.src = "https://widget.cloudinary.com/v2.0/global/all.js";
     document.body.appendChild(script);
@@ -107,7 +108,7 @@ export default function User({
 
 export async function getServerSideProps({ params }) {
   const { id } = params;
-  console.log("URL for deployment is: ", process.env.VERCEL_URL);
+  console.log("URL for deployment is: ", process.env.NEXT_PUBLIC_VERCEL_URL);
   const userResponse = await fetch(`${server}/api/user/${id}`);
   const user = await userResponse.json();
   const userPostsResponse = await fetch(`${server}/api/user/posts/${id}`);
