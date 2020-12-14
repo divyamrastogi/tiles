@@ -44,8 +44,8 @@ export default function User({
                 method: "POST",
                 body: JSON.stringify({ post: result.info }),
               });
-              const uploadedPost = await res.json();
-              setUserPosts([...userPosts, uploadedPost]);
+              const { post } = await res.json();
+              setUserPosts([...userPosts, post]);
             }
             console.log("Done! Here is the image info: ", result.info);
           }
