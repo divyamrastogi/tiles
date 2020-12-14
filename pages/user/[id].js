@@ -31,14 +31,14 @@ export default function User({
         async (error, result) => {
           if (!error && result && result.event === "success") {
             if (source === "profile") {
-              const res = await fetch(`/api/user/profilephoto/${_id}`, {
+              const res = await fetch(`http://${server}/api/user/profilephoto/${_id}`, {
                 method: "PUT",
                 body: JSON.stringify({ path: result.info.path }),
               });
               const { url } = await res.json();
               setPhoto(url);
             } else {
-              const res = await fetch(`/api/user/posts/${_id}`, {
+              const res = await fetch(`http://${server}/api/user/posts/${_id}`, {
                 method: "POST",
                 body: JSON.stringify({ post: result.info }),
               });
@@ -109,9 +109,9 @@ export default function User({
 export async function getServerSideProps({ params }) {
   const { id } = params;
   console.log("URL for deployment is: ", process.env.NEXT_PUBLIC_VERCEL_URL);
-  const userResponse = await fetch(`${server}/api/user/${id}`);
+  const userResponse = await fetch(`http://${server}/api/user/${id}`);
   const user = await userResponse.json();
-  const userPostsResponse = await fetch(`${server}/api/user/posts/${id}`);
+  const userPostsResponse = await fetch(`http://${server}/api/user/posts/${id}`);
   const posts = await userPostsResponse.json();
   return {
     props: { user, posts },
