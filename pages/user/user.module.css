@@ -8,6 +8,12 @@
   font-weight: normal;
   font-size: 2em;
 }
+.posts {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 .postsInfo {
   margin-top: 0.5em;
   font-size: 1.25em;
@@ -43,4 +49,36 @@
   border: transparent;
   padding: 0.5em 1em;
   border-radius: 4px;
+}
+@media (max-width: 400px) {
+  .main {
+    width: 96%;
+    margin: 0 auto;
+  }
+  .photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: unset;
+    margin-bottom: 1em;
+  }
+  .uploadPhoto {
+    height: 40px;
+    width: 100%;
+  }
+  .photos {
+    margin-left: 0;
+  }
+  .posts {
+    display: block;
+  }
+  .profile {
+    display: block;
+  }
+  .details {
+    margin: 0;
+  }
+  .post {
+    width: 100%;
+  }
 }

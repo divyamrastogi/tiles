@@ -54,6 +54,9 @@ export default function Home({ isConnected, users }) {
           justify-content: center;
           align-items: center;
         }
+        body {
+          margin: 0;
+        }
 
         main {
           padding: 5rem 0;

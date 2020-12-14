@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Footer from "components/footer";
+import Modal from "components/modal";
+import Post from "@/components/post";
 import { server } from "../../config";
 import styles from "./user.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -10,6 +12,8 @@ export default function User({
 }) {
   const [photoUrl, setPhoto] = useState(profilePhotoPath);
   const [userPosts, setUserPosts] = useState(posts);
+  const [open, setVisible] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   const myWidgetRef = useRef(null);
 
@@ -53,11 +57,23 @@ export default function User({
       );
     }
     myWidgetRef.current.open();
-  });
+  }, []);
 
   const onProfileUploadClick = useCallback(() => {
     uploadPhoto("profile");
-  });
+  }, [uploadPhoto]);
+
+  const closeModal = useCallback(() => {
+    setVisible(false);
+  }, [setVisible]);
+
+  const onPostClick = useCallback(
+    (id) => {
+      setSelectedPost(id);
+      setVisible(true);
+    },
+    [setSelectedPost]
+  );
 
   return (
     <div className={styles.main}>
@@ -93,16 +109,15 @@ export default function User({
         </div>
       </header>
       <div className={styles.posts}>
-        {userPosts.map(({ _id, path, original_filename }) => (
-          <Image
-            key={_id}
-            src={`/${path}`}
-            alt={original_filename}
-            height={300}
-            width={300}
-          />
+        {userPosts.map((post) => (
+          <Post onClick={onPostClick} post={post} key={post._id} />
         ))}
       </div>
+      <Modal onOverlayClick={closeModal} isVisible={open} height="800px">
+        {selectedPost ? (
+          <Post layout="fill" post={selectedPost} key={selectedPost._id} />
+        ) : null}
+      </Modal>
       <Footer />
     </div>
   );

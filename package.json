@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "babel-plugin-module-resolver": "^4.0.0",
+    "classnames": "^2.2.6",
     "cloudinary": "^1.23.0",
     "mongodb": "^3.5.9",
     "next": "latest",
