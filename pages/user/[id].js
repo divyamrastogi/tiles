@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Footer from "components/footer";
 import Modal from "components/modal";
-import Post from "@/components/post";
+import Post from "components/post";
 import { server } from "../../config";
 import styles from "./user.module.css";
 import { useCallback, useEffect, useRef, useState } from "react";
