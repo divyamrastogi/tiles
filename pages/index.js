@@ -202,7 +202,7 @@ export async function getServerSideProps(context) {
   const { client, db } = await connectToDatabase();
 
   const isConnected = await client.isConnected(); // Returns true or false
-  const res = await fetch(`http://${server}/api/users`);
+  const res = await fetch(`${server}/api/users`);
   const users = await res.json();
   return {
     props: { isConnected, users },
